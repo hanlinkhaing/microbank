@@ -21,7 +21,8 @@ spring:
             - "application_prod.yml"
             - "application_qa.yml"
     profile:
-        active: qa
+        active:
+            - "qa"
 
 build:
     version: 0.0.1-LOCAL-SNAPSHOT
