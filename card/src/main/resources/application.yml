@@ -14,3 +14,21 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    import:
+        - "application_prod.yml"
+        - "application_qa.yml"
+    profile:
+      active: qa
+
+build:
+  version: 0.0.1-LOCAL-SNAPSHOT
+
+account:
+  message: "Welcome to MicroBank Card Service"
+  contactDetails:
+    email: "han@microbank.com"
+    name: "Han Solo"
+  onCallSupport:
+    - (66)23423234
+    - (95)46234456
