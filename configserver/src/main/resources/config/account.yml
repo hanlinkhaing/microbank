@@ -1,0 +1,12 @@
+
+build:
+    version: 0.0.1-LOCAL-SNAPSHOT
+
+account:
+    message: "Welcome to MicroBank Account Service"
+    contactDetails:
+        email: "han@microbank.com"
+        name: "Han Solo"
+    onCallSupport:
+        - (66)23423234
+        - (95)46234456
