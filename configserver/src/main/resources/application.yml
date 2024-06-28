@@ -13,11 +13,22 @@ spring:
           timeout: 5
           clone-on-start: true
           force-pull: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: local
+    password: localpass
 #        native:
 # Classpath location
 #          search-locations: "classpath:/config"
 # Filesystem location
 #          search-locations: "file:///Users//hanlinkhaing//Downloads//Documents//config"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 encrypt:
   key: "mysecretkey"
