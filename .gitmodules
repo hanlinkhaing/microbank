@@ -1,0 +1,3 @@
+[submodule "microbank-config"]
+	path = microbank-config
+	url = git@han.github.com:hanlinkhaing/microbank-config.git
