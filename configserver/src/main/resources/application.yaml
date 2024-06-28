@@ -2,15 +2,25 @@ spring:
   application:
     name: "configserver"
   profiles:
-    active: native
+#    active: native
+    active: git
   cloud:
     config:
       server:
-        native:
+        git:
+          uri: "https://github.com/hanlinkhaing/microbank-config.git"
+          default-label: "main"
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+#        native:
 # Classpath location
-          search-locations: "classpath:/config"
+#          search-locations: "classpath:/config"
 # Filesystem location
 #          search-locations: "file:///Users//hanlinkhaing//Downloads//Documents//config"
+
+encrypt:
+  key: "mysecretkey"
 
 server:
   port: 8071

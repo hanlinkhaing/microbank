@@ -18,3 +18,6 @@ This project is built using the following technologies:
 ### About Config Server
 I added a config server to the project using <b>Spring Cloud Config Server dependency</b>.
 The config server is responsible for serving the configuration properties to the microservices.
+In this server, I had test the following features:
+1. Serving configuration properties from a git repository with encryption.
+2. Serving configuration properties from a local directory.
