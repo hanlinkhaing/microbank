@@ -1,4 +1,36 @@
+name: "microbank"
+
 services:
+  accountdb:
+    container_name: "accountdb"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "accountdb"
+    extends:
+      file: common.yml
+      service: db-service
+
+  loandb:
+    container_name: "loandb"
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: "loandb"
+    extends:
+      file: common.yml
+      service: db-service
+
+  cardb:
+    container_name: "cardb"
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_DATABASE: "cardb"
+    extends:
+      file: common.yml
+      service: db-service
+
   rabbit:
     image: rabbitmq:3.13-management
     hostname: rabbit
@@ -41,8 +73,11 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
+      loandb:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "account"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://accountdb:3306/accountdb"
     extends:
         file: common.yml
         service: ms-configserver-config
@@ -55,8 +90,11 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
+      loandb:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "loan"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://loandb:3306/loandb"
     extends:
       file: common.yml
       service: ms-configserver-config
@@ -69,8 +107,11 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
+      cardb:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "card"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://cardb:3306/cardb"
     extends:
       file: common.yml
       service: ms-configserver-config
