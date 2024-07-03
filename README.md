@@ -14,6 +14,10 @@ This project is built using the following technologies:
 6. Buildpacks (For production ready images)
 7. Google Jib (For production ready images)
 8. Spring Profiles
+9. Netflix Eureka (Server & Client) for Service Discovery
+10. Spring Cloud Bus
+11. Spring Cloud Config Monitor
+12. Spring Cloud Open Feign
 
 ### About Config Server
 I added a config server to the project using <b>Spring Cloud Config Server dependency</b>.
@@ -26,7 +30,7 @@ In this server, I had test the following features:
 #### Enabling Spring Cloud Config Monitor on env changes
 1. Add spring-cloud-config-monitor and spring-cloud-starter-bus-amqp dependencies to the config server.
 2. Add the following properties to the application.yml file:
-```
+```yaml
 management:
   endpoints:
     web:
@@ -44,8 +48,8 @@ management:
 
 ### Service Discovery and Service Registration (Client Side)
 I added a project named with <b>eurekaserver</b> to the project using <b>Spring Cloud Eureka Server dependency</b>.
-```
-// Following env properties are added in Config Server.
+```yaml
+# Following env properties are added in Config Server.
 server:
   port: 8070
 
@@ -59,8 +63,8 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
 ```
 On each microservice, I added the <b>Spring Cloud Eureka Client dependency</b> to register the service to the Eureka server.
-```
-// I added the following properties in each microservice.
+```yaml
+# I added the following properties in each microservice.
 management:
     endpoints:
         web:
@@ -91,4 +95,13 @@ info:
         name: "account"
         description: "MicroBank Account Service"
         version: "0.0.1-SNAPSHOT"
+```
+I added <b>spring-cloud-starter-openfeign</b> dependency to the microservices to communicate with each other.
+```java
+@FeignClient(name = "card")
+public interface CardFeignClient {
+
+    @GetMapping("/api/fetch")
+    ResponseEntity<CardDto> fetchCardDetails(@RequestParam String mobileNumber);
+}
 ```
