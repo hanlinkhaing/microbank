@@ -26,7 +26,8 @@ In this server, I had test the following features:
 #### Enabling Spring Cloud Config Monitor on env changes
 1. Add spring-cloud-config-monitor and spring-cloud-starter-bus-amqp dependencies to the config server.
 2. Add the following properties to the application.yml file:
-```management:
+```
+management:
   endpoints:
     web:
       exposure:
@@ -40,3 +41,54 @@ In this server, I had test the following features:
 ```
 3. For microservices, need to enable only spring-cloud-starter-bus-amqp dependency and its properties.
 4. Enable webhooks in GitHub config repository to notify the config server (POST /monitor) about the changes.
+
+### Service Discovery and Service Registration (Client Side)
+I added a project named with <b>eurekaserver</b> to the project using <b>Spring Cloud Eureka Server dependency</b>.
+```
+// Following env properties are added in Config Server.
+server:
+  port: 8070
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+```
+On each microservice, I added the <b>Spring Cloud Eureka Client dependency</b> to register the service to the Eureka server.
+```
+// I added the following properties in each microservice.
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+    endpoint:
+        shutdown:
+            enabled: true
+    info:
+        env:
+            enabled: true
+
+endpoints:
+    shutdown:
+        enabled: true
+
+eureka:
+    instance:
+        preferIpAddress: true
+    client:
+        fetchRegistry: true
+        registerWithEureka: true
+        serviceUrl:
+            defaultZone: http://localhost:8070/eureka/
+
+info:
+    app:
+        name: "account"
+        description: "MicroBank Account Service"
+        version: "0.0.1-SNAPSHOT"
+```
