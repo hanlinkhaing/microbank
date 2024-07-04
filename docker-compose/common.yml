@@ -32,8 +32,21 @@ services:
   ms-configserver-config:
     extends:
       service: ms-base-config
+    depends_on:
+      configserver:
+        condition: service_healthy
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071
+
+  ms-eurekaserver-config:
+    extends:
+      service: ms-configserver-config
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+    environment:
       SRRING_DATASOURCE_ROOT_USERNAME: "root"
       SPRING_DATASOURCE_ROOT_PASSWORD: "root"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: "http://eurekaserver:8070/eureka/"
+
