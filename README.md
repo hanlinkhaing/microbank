@@ -18,6 +18,7 @@ This project is built using the following technologies:
 10. Spring Cloud Bus
 11. Spring Cloud Config Monitor
 12. Spring Cloud Open Feign
+13. Spring Cloud Gateway
 
 ### About Config Server
 I added a config server to the project using <b>Spring Cloud Config Server dependency</b>.

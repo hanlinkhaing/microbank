@@ -4,7 +4,7 @@ spring:
     application:
         name: "account"
     profiles:
-        active: "prod"
+        active: "default"
     datasource:
         url: jdbc:mysql://localhost:3306/accountdb
         username: root
@@ -27,9 +27,17 @@ management:
         web:
             exposure:
                 include: "*"
+    health:
+        readiness-state:
+            enabled: true
+        liveness-state:
+            enabled: true
     endpoint:
         shutdown:
             enabled: true
+        health:
+            probes:
+                enabled: true
     info:
         env:
             enabled: true
